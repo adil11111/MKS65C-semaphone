@@ -33,24 +33,24 @@ int main(int argc, char const *argv[]) {
 
  file = open("./story.txt", O_RDONLY);
  if (file == -1){
-    printf("File Error: %s\n", strerror(errno));
+    printf("ERROR: %s\n", strerror(errno));
  }
  lseek(file, 0 - *data, SEEK_END);
  if ( file == -1){
-   printf("lseek Error: %s\n", strerror(errno));
+   printf("ERROR: %s\n", strerror(errno));
  }
 
  read(file, text, *data);
  close(file);
  if (errno){
-   printf("Read Error: %s\n", strerror(errno));
+   printf("ERROR: %s\n", strerror(errno));
  }
  else{
    printf("%s", text);
  }
 
 
- printf("Next line (max 2048 char):\n");
+ printf("Next:\n");
  char *input = calloc(2048, sizeof(char));
  fgets(input, 2049, stdin);
  *data = (int)strlen(input);
@@ -59,17 +59,18 @@ int main(int argc, char const *argv[]) {
 
  file = open("./story.txt", O_APPEND | O_WRONLY);
  if (file == -1){
-    printf("File Error: %s\n", strerror(errno));
+    printf("ERROR: %s\n", strerror(errno));
  }
 
  if (write(file, input, strlen(input)) == -1){
-    printf("Write Error: %s\n", strerror(errno));
+    printf("ERROR: %s\n", strerror(errno));
  }
  close(file);
 
  shmid = shmget( KEY, 4, 0644|IPC_CREAT);
 
 
+ //downing
  sb.sem_op = 1;
  semop(semd, &sb, 1);
 
