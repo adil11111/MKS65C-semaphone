@@ -46,7 +46,7 @@ int main(int argc, char const *argv[]) {
    printf("ERROR: %s\n", strerror(errno));
  }
  else{
-   printf("%s", text);
+   printf("%s\n", text);
  }
 
 
